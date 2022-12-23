@@ -30,6 +30,7 @@ console.log("will file read!!");
 // Server
 const http = require("http");
 const url = require("url");
+const slugify = require("slugify");
 
 // Top level block code that run once at the begin (Synchronous)
 const replaceTemplate = require("./modules/replaceTemplate");
@@ -47,26 +48,27 @@ const tempProduct = fs.readFileSync(
 );
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const dataObj = JSON.parse(data);
+const slugs = dataObj
+	.map((el) => slugify(el.productName, { lower: true }))
+	.join(" ");
+console.log(slugs);
 
 const server = http.createServer((req, res) => {
 	const { query, pathname } = url.parse(req.url, true);
-	console.log(query);
 
 	if (pathname === "/" || pathname === "/overview") {
-		res.writeHead(200, { "content-type": "text/html" });
-
 		const cardHTML = dataObj
 			.map((el) => replaceTemplate(tempCard, el))
 			.join("");
 		const output = tempOverview.replace("{%PRODUCT_CARDS%}", cardHTML);
 
+		res.writeHead(200, { "content-type": "text/html" });
 		res.end(output);
 	} else if (pathname === "/product") {
-		res.writeHead(200, { "content-type": "text/html" });
-
 		const product = dataObj[query.id];
 		const output = replaceTemplate(tempProduct, product);
 
+		res.writeHead(200, { "content-type": "text/html" });
 		res.end(output);
 	} else if (pathname === "/api") {
 		res.writeHead(200, { "content-type": "application/json" });
