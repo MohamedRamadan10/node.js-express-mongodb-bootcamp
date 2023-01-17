@@ -4,7 +4,7 @@
    "description": "Learning node.js, express, mongoDB",
    "main": "app.js",
    "scripts": {
-      "start:dev": "nodemon server",
+      "start": "nodemon server",
       "start:prod": "NODE_ENV=production nodemon server"
    },
    "author": "Mohamed Ramadan",
@@ -20,6 +20,7 @@
       "eslint-plugin-prettier": "^4.2.1",
       "eslint-plugin-react": "^7.32.1",
       "express": "^4.18.2",
+      "mongoose": "^6.8.4",
       "morgan": "^1.10.0",
       "prettier": "^2.8.3"
    }
