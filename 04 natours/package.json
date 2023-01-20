@@ -1,5 +1,8 @@
 {
    "name": "natours",
+   "engines": {
+     "node": "^10"
+   },
    "version": "1.0.0",
    "description": "Learning node.js, express, mongoDB",
    "main": "app.js",
